@@ -20,3 +20,32 @@ else:
     print("Syntax: python3 port-scanner.py <ip>")
     sys.exit()
 
+#add a baner
+print("-"*50)
+print("Scanning target " + target)
+print("Time Started: "+str(datetime.now()))
+print("-"*50)
+
+try:
+    for port in range(1,451):
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        socket.setdefaulttimeout(1)
+        result =  s.connect_ex((target,port))
+        if result == 0:
+            print(f'Port {port} is open.')
+        s.close()
+    print("\nScanning Succesful")
+
+except KeyboardInterrupt:
+    print()
+    print("Exiting program")
+    sys.exit()
+
+except socket.gaierror:
+    print("Hostname couldn't be resolved.")
+    sys.exit()
+
+except socket.error:
+    print("Could not connect to server.")
+    sys.exit()
+
